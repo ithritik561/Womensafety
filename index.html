@@ -1,1062 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Women Safety Portal</title>
-  <style>
-    :root {
-      --primary: #d93025;
-      --primary-light: #f9d9d7;
-      --accent: #0b69ff;
-      --success: #0fa96a;
-      --bg-light: #f5f7fa;
-      --bg-dark: #0b1a33;
-      --text-dark: #1a1a1a;
-      --text-light: #e6edf7;
-      --muted-light: #777;
-      --muted-dark: #9fb0d0;
-      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      --radius: 10px;
-      --transition: 0.3s ease;
-    }
-    /* Theme: light by default */
-    body {
-      margin: 0;
-      font-family: var(--font-family);
-      background: var(--bg-light);
-      color: var(--text-dark);
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    [data-theme='dark'] {
-      background: var(--bg-dark);
-      color: var(--text-light);
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: white;
-      padding: 15px 25px;
-      box-shadow: 0 3px 10px rgb(0 0 0 / 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      transition: background var(--transition);
-    }
-    [data-theme='dark'] header {
-      background: #071728;
-      box-shadow: 0 3px 10px rgb(255 255 255 / 0.1);
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-    }
-    .logo {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: var(--primary-light);
-      color: var(--primary);
-      font-weight: 800;
-      font-size: 28px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      user-select: none;
-      box-shadow: 0 2px 5px rgb(217 48 37 / 0.45);
-      border: 2px solid #ddd;
-    }
-    h1 {
-      font-size: 20px;
-      margin: 0;
-      user-select: none;
-    }
-    header nav {
-      display: flex;
-      gap: 12px;
-    }
-    button {
-      cursor: pointer;
-      border: none;
-      border-radius: var(--radius);
-      padding: 10px 16px;
-      font-weight: 700;
-      font-size: 14px;
-      transition: background-color var(--transition), color var(--transition);
-      user-select: none;
-    }
-    button:focus-visible {
-      outline: 3px solid var(--accent);
-      outline-offset: 2px;
-    }
-    .btn-primary {
-      background-color: var(--accent);
-      color: white;
-      box-shadow: 0 4px 12px rgb(11 105 255 / 0.45);
-    }
-    .btn-primary:hover {
-      background-color: #0954cc;
-    }
-    .btn-secondary {
-      background-color: transparent;
-      border: 2px solid var(--muted-light);
-      color: var(--text-dark);
-      font-weight: 600;
-    }
-    [data-theme='dark'] .btn-secondary {
-      border-color: var(--muted-dark);
-      color: var(--text-light);
-    }
-    .btn-secondary:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background-color: var(--accent-light);
-    }
-    main {
-      flex-grow: 1;
-      padding: 24px 28px;
-      max-width: 1080px;
-      margin: 0 auto 30px;
-      display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 24px;
-    }
-    [data-theme='dark'] main {
-      color: var(--text-light);
-    }
-    section, aside {
-      background-color: var(--bg-light);
-      border-radius: var(--radius);
-      padding: 22px 24px 26px;
-      box-shadow: 0 6px 23px rgb(0 0 0 / 0.08);
-      transition: background-color var(--transition);
-    }
-    [data-theme='dark'] section, [data-theme='dark'] aside {
-      background-color: #071728;
-      box-shadow: 0 6px 30px rgb(255 255 255 / 0.06);
-    }
-    h2, h3 {
-      margin-top: 0;
-      font-weight: 700;
-      font-size: 24px;
-    }
-    h3 {
-      font-size: 20px;
-      margin-bottom: 16px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Women Safety Portal</title>
+<style>
+  /* Basic Reset */
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
 
-    /* Quick action buttons & controls */
-    .top-actions {
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-    .sos-btn {
-      background-color: var(--primary);
-      color: white;
-      font-weight: 900;
-      font-size: 20px;
-      padding: 16px 22px;
-      box-shadow: 0 10px 36px rgb(217 48 37 / 0.22);
-      border-radius: var(--radius);
-      transition: transform 0.15s ease;
-      flex-shrink: 0;
-    }
-    .sos-btn:active {
-      transform: scale(0.95);
-    }
-    .controls {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      flex-grow: 1;
-    }
-    .search-box {
-      flex-grow: 1;
-      display: flex;
-      gap: 6px;
-      background-color: white;
-      border-radius: var(--radius);
-      border: 1.5px solid #ccc;
-      padding: 6px 10px;
-      transition: border-color var(--transition);
-    }
-    .search-box input[type="text"] {
-      border: none;
-      font-size: 16px;
-      flex-grow: 1;
-      outline: none;
-      color: var(--text-dark);
-      font-weight: 500;
-      background: transparent;
-    }
-    .search-box input[type="text"]::placeholder {
-      font-weight: 400;
-      color: #aaa;
-    }
-    [data-theme='dark'] .search-box {
-      background-color: #19304c;
-      border-color: var(--muted-dark);
-    }
-    [data-theme='dark'] .search-box input[type="text"] {
-      color: var(--text-light);
-    }
-    .clear-btn {
-      font-weight: 700;
-      color: var(--muted-light);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      letter-spacing: 1px;
-      font-size: 14px;
-      transition: color var(--transition);
-      align-self: center;
-    }
-    .clear-btn:hover {
-      color: var(--primary);
-    }
+  body { background: #f7f7f7; color: #333; }
 
-    /* Map mock */
-    .map-mock {
-      margin-top: 22px;
-      height: 430px;
-      border-radius: var(--radius);
-      border: 1.8px solid #ddd;
-      background: linear-gradient(180deg, #ebf2ff, white);
-      position: relative;
-      overflow: hidden;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--muted-light);
-      user-select: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    [data-theme='dark'] .map-mock {
-      background: linear-gradient(180deg, #123055, #071728);
-      border-color: var(--muted-dark);
-      color: var(--muted-dark);
-    }
-    .marker {
-      position: absolute;
-      background-color: var(--primary);
-      color: white;
-      padding: 8px 12px;
-      border-radius: 40px;
-      font-weight: 700;
-      font-size: 14px;
-      box-shadow: 0 10px 28px rgb(0 0 0 / 0.12);
-      transform: translate(-50%, -100%);
-      transition: transform var(--transition), box-shadow var(--transition);
-      cursor: pointer;
-      user-select: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .marker.pulse::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background-color: rgba(217,48,37,0.18);
-      animation: pulseAnim 1.6s infinite;
-      transform: translate(-50%, -50%);
-      z-index: -1;
-    }
-    .marker:hover {
-      transform: translate(-50%, -100%) scale(1.1);
-      box-shadow: 0 14px 42px rgb(0 0 0 / 0.20);
-    }
-    @keyframes pulseAnim {
-      0% {
-        transform: translate(-50%, -50%) scale(0.9);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(-50%, -50%) scale(2.4);
-        opacity: 0;
-      }
-    }
+  header {
+    background: #ff4b5c;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
 
-    /* Feature cards */
-    .features {
-      margin-top: 22px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    .feature {
-      border-radius: var(--radius);
-      padding: 14px 18px;
-      background: linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6));
-      border: 1px dotted #ddd;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--primary);
-      box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
-      user-select: none;
-    }
-    [data-theme='dark'] .feature {
-      background: linear-gradient(0deg, rgba(10, 24, 48, 0.9), rgba(10, 24, 48, 0.9));
-      border-color: var(--muted-dark);
-      color: var(--accent);
-    }
-    .feature .small {
-      font-weight: 400;
-      font-size: 13px;
-      margin-top: 2px;
-      color: var(--muted-light);
-    }
-    [data-theme='dark'] .feature .small {
-      color: var(--muted-dark);
-    }
+  main { padding: 20px; max-width: 900px; margin: auto; }
 
-    /* Safety tips and lists */
-    ul.tips {
-      padding-left: 20px;
-      margin: 0;
-      font-size: 15px;
-      color: var(--text-dark);
-      user-select: none;
-    }
-    [data-theme='dark'] ul.tips {
-      color: var(--text-light);
-    }
-    ul.tips li {
-      margin-bottom: 10px;
-      line-height: 1.4;
-    }
-    ul.tips li strong {
-      color: var(--primary);
-    }
+  .section { margin-bottom: 30px; }
 
-    .list {
-      max-height: 260px;
-      overflow-y: auto;
-      padding: 8px;
-      border-radius: var(--radius);
-      border: 1.5px solid #ddd;
-      font-size: 14px;
-      color: var(--text-dark);
-      user-select: none;
-    }
-    [data-theme='dark'] .list {
-      border-color: var(--muted-dark);
-      color: var(--text-light);
-    }
-    .place {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 12px;
-      border-bottom: 1px solid #eee;
-      transition: background-color var(--transition);
-      cursor: default;
-    }
-    [data-theme='dark'] .place {
-      border-color: var(--muted-dark);
-    }
-    .place:last-child {
-      border-bottom: none;
-    }
-    .place:hover {
-      background-color: var(--primary-light);
-      box-shadow: 0 3px 6px rgb(217 48 37 / 0.12);
-      cursor: pointer;
-    }
-    [data-theme='dark'] .place:hover {
-      background-color: rgba(217, 48, 37, 0.15);
-    }
-    .meta {
-      font-size: 13px;
-      color: var(--muted-light);
-      margin-top: 2px;
-    }
-    [data-theme='dark'] .meta {
-      color: var(--muted-dark);
-    }
+  h2 { margin-bottom: 10px; color: #ff4b5c; }
 
-    /* Emergency contacts panel */
-    #contactsList {
-      font-size: 14px;
-      color: var(--muted-light);
-    }
-    [data-theme='dark'] #contactsList {
-      color: var(--muted-dark);
-    }
+  /* Help Center Search */
+  #helpSearch { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+  #helpList { list-style: none; margin-top: 10px; }
+  #helpList li { background: white; padding: 10px; margin-bottom: 5px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 
-    /* Modal */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 30px 16px;
-      z-index: 20;
-    }
-    .modal-backdrop.active {
-      display: flex;
-    }
-    .modal {
-      background: var(--bg-light);
-      max-width: 600px;
-      width: 100%;
-      border-radius: var(--radius);
-      padding: 28px 32px;
-      box-shadow: 0 18px 48px rgb(0 0 0 / 0.35);
-      color: var(--text-dark);
-      position: relative;
-      user-select: text;
-      outline: none;
-    }
-    [data-theme='dark'] .modal {
-      background: #071728;
-      color: var(--text-light);
-    }
-    .modal h3 {
-      margin: 0 0 14px !important;
-      font-size: 24px !important;
-    }
-    .modal label {
-      display: block;
-      font-weight: 600;
-      font-size: 14px;
-      margin-bottom: 6px;
-      color: var(--muted-light);
-      user-select: none;
-    }
-    .modal input[type="text"],
-    .modal select,
-    .modal textarea {
-      width: 100%;
-      font-size: 15px;
-      font-family: var(--font-family);
-      padding: 10px 14px;
-      border-radius: var(--radius);
-      border: 1.7px solid #ccc;
-      transition: border-color var(--transition);
-      user-select: text;
-      box-sizing: border-box;
-    }
-    [data-theme='dark'] .modal input[type="text"],
-    [data-theme='dark'] .modal select,
-    [data-theme='dark'] .modal textarea {
-      background: #123359;
-      border-color: var(--muted-dark);
-      color: var(--text-light);
-    }
-    .modal input[type="text"]:focus,
-    .modal select:focus,
-    .modal textarea:focus {
-      border-color: var(--accent);
-      outline: none;
-      box-shadow: 0 0 6px var(--accent);
-    }
-    .modal textarea {
-      resize: vertical;
-      min-height: 110px;
-    }
-    .modal .buttons {
-      margin-top: 20px;
-      display: flex;
-      justify-content: flex-end;
-      gap: 14px;
-    }
-    .modal button {
-      min-width: 96px;
-      padding: 10px 0;
-      font-weight: 700;
-      font-size: 16px;
-      border-radius: var(--radius);
-      user-select: none;
-    }
-    .btn-cancel {
-      background: transparent;
-      border: 2px solid var(--muted-light);
-      color: var(--muted-light);
-      transition: all var(--transition);
-    }
-    .btn-cancel:hover {
-      background: var(--muted-light);
-      color: white;
-      border-color: var(--muted-light);
-    }
-    [data-theme='dark'] .btn-cancel {
-      border-color: var(--muted-dark);
-      color: var(--muted-dark);
-    }
-    [data-theme='dark'] .btn-cancel:hover {
-      background: var(--muted-dark);
-      color: var(--text-light);
-      border-color: var(--muted-dark);
-    }
-    .btn-submit {
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      box-shadow: 0 8px 26px rgba(217, 48, 37, 0.3);
-      transition: all var(--transition);
-    }
-    .btn-submit:hover {
-      background-color: #b9251e;
-      box-shadow: 0 10px 32px rgba(217, 48, 37, 0.5);
-    }
+  /* Location */
+  #locationStatus { margin-top: 10px; font-weight: bold; }
 
-    /* Toast notification */
-    #toast {
-      position: fixed;
-      bottom: 22px;
-      right: 22px;
-      background: var(--bg-light);
-      color: var(--text-dark);
-      padding: 14px 22px;
-      border-radius: var(--radius);
-      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
-      font-weight: 600;
-      opacity: 0;
-      pointer-events: none;
-      user-select: none;
-      transition: opacity 0.3s ease;
-      z-index: 50;
-    }
-    [data-theme='dark'] #toast {
-      background: #123359;
-      color: var(--text-light);
-    }
-    #toast.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
+  /* SOS Button */
+  .sos-btn {
+    background: #ff4b5c;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    animation: pulse 1.5s infinite;
+  }
 
-    /* Responsive */
-    @media (max-width: 960px) {
-      main {
-        grid-template-columns: 1fr !important;
-        padding: 16px 18px;
-      }
-      aside {
-        order: 1;
-        margin-top: 30px;
-      }
-      .map-mock {
-        height: 300px;
-      }
-    }
+  @keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,75,92, 0.7); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(255,75,92, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,75,92, 0); }
+  }
 
-  </style>
+  /* Smooth UI transitions */
+  .fade { transition: all 0.3s ease-in-out; }
+
+  /* Profile Form */
+  input, button { font-size: 1rem; }
+  .profile-form input { padding: 10px; margin-bottom: 10px; width: 100%; border-radius: 5px; border: 1px solid #ccc; }
+  .profile-form button { background: #ff4b5c; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
+
+  /* Contacts List */
+  #contactsList li { background: white; padding: 10px; margin-bottom: 5px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+</style>
 </head>
 <body>
-  <header role="banner">
-    <div class="brand">
-      <div class="logo" aria-hidden="true">MIT</div>
-      <h1>Women Safety Portal</h1>
-    </div>
-    <nav role="navigation" aria-label="Main navigation">
-      <button id="themeToggle" class="btn-secondary" aria-pressed="false" title="Toggle dark/light theme">Toggle Theme</button>
-      <button id="openProfile" class="btn-primary" aria-haspopup="dialog" aria-controls="profileBackdrop">Profile</button>
-    </nav>
-  </header>
 
-  <main role="main">
-    <section aria-labelledby="dashboardTitle" tabindex="0">
-      <h2 id="dashboardTitle">Dashboard</h2>
-      <p style="color: var(--muted-light); margin-top: 6px; user-select:none;">
-        Quick actions, searchable help centers, location sharing & incident reporting.
-      </p>
-      <div class="top-actions" role="region" aria-label="Quick actions">
-        <button id="sosBtn" class="sos-btn" aria-label="Activate the SOS signal">SOS</button>
-        <div class="controls">
-          <div class="search-box" role="search" aria-label="Search help centers">
-            <input type="text" id="searchInput" aria-label="Search help centers" placeholder="Search Police, Hospital etc." />
-            <button id="clearSearch" class="clear-btn" aria-label="Clear search box">Clear</button>
-          </div>
-          <button id="shareLocation" class="btn-primary">Share Location</button>
-          <button id="openReport" class="btn-primary">Report Incident</button>
-        </div>
-      </div>
-      <div class="map-mock" id="mapMock" aria-label="Map showing nearby help centers">
-        <span class="map-bg">Interactive Map Mock</span>
-      </div>
-      <div class="features" aria-label="Key Features">
-        <div class="feature" tabindex="0">
-          <strong>Emergency Call</strong>
-          <p class="small">Simulated call UI with confirmation.</p>
-        </div>
-        <div class="feature" tabindex="0">
-          <strong>Share Location</strong>
-          <p class="small">Uses Geolocation API or simulated location.</p>
-        </div>
-        <div class="feature" tabindex="0">
-          <strong>Report Form</strong>
-          <p class="small">Client-side validation and preview.</p>
-        </div>
-        <div class="feature" tabindex="0">
-          <strong>Safety Tips</strong>
-          <p class="small">Accessible tips and helpline numbers.</p>
-        </div>
-      </div>
-    </section>
+<header>Women Safety Portal</header>
 
-    <aside aria-labelledby="tipsTitle resourcesTitle contactsTitle">
-      <div class="card" aria-labelledby="tipsTitle" tabindex="0" style="margin-bottom: 24px;">
-        <h3 id="tipsTitle">Safety Tips</h3>
-        <ul class="tips" role="list" aria-label="Safety Tips">
-          <li><strong>Share live location</strong> with trusted contacts when travelling alone.</li>
-          <li><strong>Keep emergency numbers</strong> in an easy-access place.</li>
-          <li><strong>Trust your instincts</strong> — avoid isolated places at night.</li>
-          <li><strong>Plan routes</strong> and prefer well-lit public transport stops.</li>
-        </ul>
-      </div>
-
-      <div class="card" aria-labelledby="resourcesTitle" tabindex="0" style="margin-bottom: 24px;">
-        <h3 id="resourcesTitle">Help Centers (Searchable)</h3>
-        <div class="list" id="placesList" aria-live="polite" role="list"></div>
-      </div>
-
-      <div class="card" aria-labelledby="contactsTitle" tabindex="0">
-        <h3 id="contactsTitle">Emergency Contacts</h3>
-        <div id="contactsList" style="font-size: 14px; color: var(--muted-light);">No contacts saved. Add from Profile.</div>
-      </div>
-    </aside>
-  </main>
-
-  <footer style="text-align: center; padding: 10px 12px; user-select: none; font-size: 13px; color: var(--muted-light);">
-    Women Safety Portal • Frontend demo • No backend included
-  </footer>
-
-  <!-- Toast -->
-  <div id="toast" role="status" aria-live="polite"></div>
-
-  <!-- Modal Backdrop & Modals -->
-  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
-    <div class="modal" tabindex="0">
-      <h3 id="modalTitle">Modal</h3>
-      <div id="modalContent" style="margin-top: 18px;"></div>
-      <div class="buttons" style="margin-top: 24px; justify-content: flex-end;">
-        <button id="modalClose" class="btn-secondary">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="profileBackdrop" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="profileTitle" tabindex="-1">
-    <div class="modal" tabindex="0" role="form">
-      <h3 id="profileTitle">Profile & Emergency Contacts</h3>
-      <label for="nameInput">Your Name</label>
-      <input id="nameInput" type="text" placeholder="e.g. Priya Sharma" />
-      <label for="contactInput" style="margin-top: 12px;">Emergency Contact (phone)</label>
-      <input id="contactInput" type="text" placeholder="e.g. +91-98xxxxxxxx" />
-      <div class="buttons" style="margin-top: 24px; justify-content: flex-end;">
-        <button id="saveProfile" class="btn-primary">Save</button>
-        <button id="closeProfile" class="btn-secondary">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <template id="reportTemplate">
-    <h3>Report Incident</h3>
-    <form id="reportForm" novalidate>
-      <label for="incidentType">Incident Type</label>
-      <select id="incidentType" required>
-        <option value="" disabled selected>Select incident type</option>
-        <option value="Harassment">Harassment</option>
-        <option value="Assault">Assault</option>
-        <option value="Threat">Threat</option>
-        <option value="Other">Other</option>
-      </select>
-      <label for="locationInput" style="margin-top: 14px;">Location (text)</label>
-      <input id="locationInput" type="text" placeholder="e.g. Nearest Market, Sector 5" required />
-      <label for="descInput" style="margin-top: 14px;">Description</label>
-      <textarea id="descInput" placeholder="Describe what happened (client-side only)" required></textarea>
-      <div class="buttons" style="margin-top: 24px; justify-content: flex-end;">
-        <button type="submit" class="btn-primary">Submit</button>
-      </div>
+<main>
+  <!-- Profile Section -->
+  <div class="section">
+    <h2>Profile</h2>
+    <form class="profile-form" id="profileForm">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="tel" id="phone" placeholder="Your Phone Number" required>
+      <button type="submit">Save Profile</button>
     </form>
-  </template>
+    <p id="profileStatus"></p>
+  </div>
 
-  <script>
-    // Data for nearby help centers
-    const PLACES = [
-      {id:1, name:'Community Help Center', type:'Help Center', x:34, y:44, info:'Open 9am-6pm'},
-      {id:2, name:'City Police Station', type:'Police Station', x:58, y:62, info:'24/7 Emergency'},
-      {id:3, name:'St. Mary Hospital', type:'Hospital', x:76, y:32, info:'Ambulance available'},
-      {id:4, name:'Metro Safe Point', type:'Safe Point', x:22, y:72, info:'Volunteer assisted'},
-      {id:5, name:'Railway Police', type:'Police Station', x:48, y:18, info:'Platform safety'},
-      {id:6, name:'Women Help Centre', type:'Help Center', x:86, y:78, info:'Counseling available'}
-    ];
+  <!-- Help Centers Section -->
+  <div class="section">
+    <h2>Help Centers 🏥</h2>
+    <input type="text" id="helpSearch" placeholder="Search help centers...">
+    <ul id="helpList"></ul>
+  </div>
 
-    // Elements
-    const mapMock = document.getElementById('mapMock');
-    const placesList = document.getElementById('placesList');
-    const searchInput = document.getElementById('searchInput');
-    const clearSearch = document.getElementById('clearSearch');
-    const toast = document.getElementById('toast');
+  <!-- Location Section -->
+  <div class="section">
+    <h2>Share Location 📍</h2>
+    <button id="getLocationBtn">Get Current Location</button>
+    <p id="locationStatus">Location not shared yet.</p>
+  </div>
 
-    const modalBackdrop = document.getElementById('modalBackdrop');
-    const modalContent = document.getElementById('modalContent');
-    const modalClose = document.getElementById('modalClose');
+  <!-- SOS Section -->
+  <div class="section">
+    <h2>Emergency SOS 🔴</h2>
+    <button class="sos-btn" id="sosBtn">SOS</button>
+    <p id="sosStatus"></p>
+  </div>
 
-    const profileBackdrop = document.getElementById('profileBackdrop');
-    const saveProfile = document.getElementById('saveProfile');
-    const closeProfile = document.getElementById('closeProfile');
-    const openProfile = document.getElementById('openProfile');
-    const contactsList = document.getElementById('contactsList');
+  <!-- Contacts Section -->
+  <div class="section">
+    <h2>Emergency Contacts</h2>
+    <form id="contactForm">
+      <input type="text" id="contactName" placeholder="Contact Name" required>
+      <input type="tel" id="contactPhone" placeholder="Contact Phone" required>
+      <button type="submit">Add Contact</button>
+    </form>
+    <ul id="contactsList"></ul>
+  </div>
+</main>
 
-    const themeToggle = document.getElementById('themeToggle');
-    const root = document.documentElement;
+<script>
+  // ======= Profile Storage =======
+  const profileForm = document.getElementById('profileForm');
+  const profileStatus = document.getElementById('profileStatus');
 
-    // Render places on map and list (filtered by search query)
-    function renderPlaces(filter = '') {
-      // Clear markers and list
-      mapMock.querySelectorAll('.marker').forEach(m => m.remove());
-      placesList.innerHTML = '';
-      const query = filter.trim().toLowerCase();
-      const filtered = PLACES.filter(place =>
-        (place.name + ' ' + place.type).toLowerCase().includes(query)
-      );
+  profileForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    localStorage.setItem('userProfile', JSON.stringify({ name, phone }));
+    profileStatus.textContent = 'Profile saved successfully!';
+  });
 
-      if (filtered.length === 0) {
-        placesList.innerHTML = '<div style="color: var(--muted-light); padding: 10px;">No places found.</div>';
-        return;
-      }
+  // Load profile on start
+  window.addEventListener('load', () => {
+    const savedProfile = JSON.parse(localStorage.getItem('userProfile'));
+    if(savedProfile){
+      document.getElementById('name').value = savedProfile.name;
+      document.getElementById('phone').value = savedProfile.phone;
+      profileStatus.textContent = 'Profile loaded from local storage.';
+    }
+  });
 
-      filtered.forEach(place => {
-        // List item
-        const placeDiv = document.createElement('div');
-        placeDiv.className = 'place';
-        placeDiv.innerHTML = `
-          <div>
-            <strong>${place.name}</strong>
-            <div class="meta">${place.type} • ${place.info}</div>
-          </div>
-          <button class="btn-primary" data-id="${place.id}" aria-label="Show ${place.name} on map">Show</button>
-        `;
-        placesList.appendChild(placeDiv);
+  // ======= Help Centers =======
+  const helpCenters = [
+    "City Hospital, Main Street",
+    "Police Station, Downtown",
+    "Women Help Line, 1091",
+    "Community Center, West Area",
+    "Health Clinic, North District"
+  ];
 
-        // Marker
-        const marker = document.createElement('div');
-        marker.className = 'marker' + (place.type.toLowerCase().includes('police') ? ' pulse' : '');
-        marker.style.left = place.x + '%';
-        marker.style.top = place.y + '%';
-        marker.setAttribute('data-id', place.id);
-        marker.setAttribute('tabindex', '0');
-        marker.setAttribute('role', 'button');
-        marker.setAttribute('aria-label', place.name + ', ' + place.type);
-        marker.textContent = place.type === 'Police Station' ? 'PS' : (place.type === 'Hospital' ? 'H' : 'HC');
-        mapMock.appendChild(marker);
+  const helpList = document.getElementById('helpList');
+  const helpSearch = document.getElementById('helpSearch');
 
-        // Marker click and keyboard "Enter" or "Space"
-        marker.addEventListener('click', () => {
-          focusPlace(place.id);
-          showPlaceInfo(place);
-        });
-        marker.addEventListener('keydown', (e) => {
-          if(e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            marker.click();
-          }
-        });
-
-        // List button click
-        placeDiv.querySelector('button').addEventListener('click', () => {
-          focusPlace(place.id);
-          showPlaceInfo(place);
-        });
+  function displayHelpCenters(filter=""){
+    helpList.innerHTML = "";
+    helpCenters.filter(c => c.toLowerCase().includes(filter.toLowerCase()))
+      .forEach(c => {
+        const li = document.createElement('li');
+        li.textContent = c;
+        helpList.appendChild(li);
       });
-    }
+  }
 
-    // Animate marker and scroll place into view
-    function focusPlace(id) {
-      const marker = mapMock.querySelector(`.marker[data-id="${id}"]`);
-      if (!marker) return;
-      marker.style.transition = 'transform 0.4s ease';
-      marker.style.transform = 'translate(-50%, -100%) scale(1.2)';
-      setTimeout(() => {
-        marker.style.transform = 'translate(-50%, -100%) scale(1)';
-      }, 700);
+  helpSearch.addEventListener('input', () => displayHelpCenters(helpSearch.value));
+  displayHelpCenters();
 
-      const btn = placesList.querySelector(`button[data-id="${id}"]`);
-      if (btn) btn.closest('.place').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+  // ======= Location Sharing =======
+  const getLocationBtn = document.getElementById('getLocationBtn');
+  const locationStatus = document.getElementById('locationStatus');
 
-    // Show modal with place info and action buttons
-    function showPlaceInfo(place) {
-      openModal(
-        place.name,
-        `<p style="color: var(--muted-light);">${place.type} • ${place.info}</p>
-         <div style="margin-top:12px; display:flex; gap:10px; justify-content:flex-end;">
-           <button id="navTo" class="btn-primary">Navigate (simulated)</button>
-           <button id="shareLocBtn" class="btn-secondary">Share this location</button>
-         </div>`
+  getLocationBtn.addEventListener('click', () => {
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(
+        pos => locationStatus.textContent = `Latitude: ${pos.coords.latitude}, Longitude: ${pos.coords.longitude}`,
+        err => locationStatus.textContent = "Unable to retrieve location."
       );
-      setTimeout(() => {
-        document.getElementById('navTo').addEventListener('click', () => {
-          closeModal();
-          showToast('Navigation feature is simulated in demo.');
-        });
-        document.getElementById('shareLocBtn').addEventListener('click', () => {
-          closeModal();
-          shareSimulatedLocation(`${place.name} (${place.type})`);
-        });
-      }, 10);
+    } else {
+      locationStatus.textContent = "Geolocation not supported.";
     }
+  });
 
-    // Modal open and close functions
-    function openModal(title, htmlContent) {
-      document.getElementById('modalTitle').textContent = title;
-      modalContent.innerHTML = htmlContent;
-      modalBackdrop.classList.add('active');
-      modalBackdrop.setAttribute('aria-hidden', 'false');
-      modalContent.querySelector('button, input, select, textarea')?.focus();
+  // ======= SOS Button =======
+  const sosBtn = document.getElementById('sosBtn');
+  const sosStatus = document.getElementById('sosStatus');
+
+  sosBtn.addEventListener('click', () => {
+    sosStatus.textContent = "SOS Activated! Notifying your emergency contacts...";
+    // Simulate alert for contacts
+    const contacts = JSON.parse(localStorage.getItem('emergencyContacts')) || [];
+    if(contacts.length){
+      contacts.forEach(c => console.log(`SOS sent to ${c.name} - ${c.phone}`));
+      sosStatus.textContent += ` ${contacts.length} contacts notified.`;
+    } else {
+      sosStatus.textContent += " No contacts saved.";
     }
-    function closeModal() {
-      modalBackdrop.classList.remove('active');
-      modalBackdrop.setAttribute('aria-hidden', 'true');
-    }
-    modalClose.addEventListener('click', closeModal);
-    modalBackdrop.addEventListener('click', (e) => {
-      if (e.target === modalBackdrop) closeModal();
+  });
+
+  // ======= Emergency Contacts =======
+  const contactForm = document.getElementById('contactForm');
+  const contactsList = document.getElementById('contactsList');
+
+  function displayContacts(){
+    contactsList.innerHTML = "";
+    const contacts = JSON.parse(localStorage.getItem('emergencyContacts')) || [];
+    contacts.forEach(c => {
+      const li = document.createElement('li');
+      li.textContent = `${c.name} - ${c.phone}`;
+      contactsList.appendChild(li);
     });
+  }
 
-    // Toast notification function
-    function showToast(msg, duration = 3000) {
-      toast.textContent = msg;
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, duration);
-    }
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('contactName').value;
+    const phone = document.getElementById('contactPhone').value;
+    const contacts = JSON.parse(localStorage.getItem('emergencyContacts')) || [];
+    contacts.push({name, phone});
+    localStorage.setItem('emergencyContacts', JSON.stringify(contacts));
+    contactForm.reset();
+    displayContacts();
+  });
 
-    // Profile modal open/close
-    openProfile.addEventListener('click', () => {
-      profileBackdrop.classList.add('active');
-      profileBackdrop.setAttribute('aria-hidden', 'false');
-      document.getElementById('nameInput').value = localStorage.getItem('ws_name') || '';
-      document.getElementById('contactInput').value = localStorage.getItem('ws_contact') || '';
-      document.getElementById('nameInput').focus();
-    });
-    closeProfile.addEventListener('click', () => {
-      profileBackdrop.classList.remove('active');
-      profileBackdrop.setAttribute('aria-hidden', 'true');
-    });
+  displayContacts();
+</script>
 
-    // Save profile info locally
-    saveProfile.addEventListener('click', () => {
-      const name = document.getElementById('nameInput').value.trim();
-      const contact = document.getElementById('contactInput').value.trim();
-      if(!contact.match(/^[+0-9\s-]{6,}$/)){
-        alert('Please enter a valid emergency contact number.');
-        return;
-      }
-      localStorage.setItem('ws_name', name);
-      localStorage.setItem('ws_contact', contact);
-      updateContactsUI();
-      closeProfile.click();
-      showToast('Profile saved locally');
-    });
-
-    // Update emergency contacts panel
-    function updateContactsUI() {
-      const name = localStorage.getItem('ws_name');
-      const contact = localStorage.getItem('ws_contact');
-      if (name || contact) {
-        contactsList.innerHTML =
-          `<div style="font-weight: 700;">${name || 'Your Name'}</div><div style="font-size: 13px; color: var(--muted-light);">${contact || 'Contact not provided'}</div>`;
-      } else {
-        contactsList.textContent = 'No contacts saved. Add from Profile.';
-      }
-    }
-    updateContactsUI();
-
-    // SOS button flow
-    const sosBtn = document.getElementById('sosBtn');
-    sosBtn.addEventListener('click', () => {
-      openModal(
-        'Confirm SOS',
-        `<p style="color: var(--muted-light);">Are you sure you want to activate SOS? This demo will simulate sending your location to saved emergency contacts.</p>
-         <div style="display:flex; gap: 16px; justify-content:flex-end;">
-          <button id="cancelSOS" class="btn-secondary">Cancel</button>
-          <button id="confirmSOS" class="sos-btn">Confirm SOS</button>
-         </div>`
-      );
-      setTimeout(() => {
-        document.getElementById('cancelSOS').addEventListener('click', closeModal);
-        document.getElementById('confirmSOS').addEventListener('click', () => {
-          closeModal();
-          sendSOS();
-        });
-      }, 10);
-    });
-
-    // Send simulated SOS
-    function sendSOS() {
-      openModal('Sending SOS...', `<p style="color: var(--muted-light);">Locating you and notifying emergency contacts...</p>`);
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            closeModal();
-            const coords = `${pos.coords.latitude.toFixed(5)}, ${pos.coords.longitude.toFixed(5)}`;
-            notifyContacts(coords, 'SOS');
-          },
-          (err) => {
-            // fallback to simulated coords
-            const coords = simulateCoords();
-            closeModal();
-            notifyContacts(coords, 'SOS (simulated)');
-          }
-        );
-      } else {
-        const coords = simulateCoords();
-        closeModal();
-        notifyContacts(coords, 'SOS (simulated)');
-      }
-    }
-
-    // Notify saved contacts (simulated)
-    function notifyContacts(coords, label) {
-      const contact = localStorage.getItem('ws_contact') || 'No saved contact';
-      const name = localStorage.getItem('ws_name') || 'User';
-      openModal(
-        'SOS Sent',
-        `<p><strong>Sent to:</strong> ${contact}</p><p style="color: var(--muted-light);">${name}, this is a simulated message. Coordinates: <strong>${coords}</strong></p>`
-      );
-      showToast('SOS notification simulated');
-    }
-
-    // Share location button
-    document.getElementById('shareLocation').addEventListener('click', () => {
-      if (navigator.geolocation) {
-        openModal('Sharing Location', `<p style="color: var(--muted-light);">Attempting to get your location...</p>`);
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            closeModal();
-            shareSimulatedLocation(`Lat ${pos.coords.latitude.toFixed(5)}, Lon ${pos.coords.longitude.toFixed(5)}`);
-          },
-          (err) => {
-            closeModal();
-            shareSimulatedLocation(simulateCoords());
-          }
-        );
-      } else {
-        shareSimulatedLocation(simulateCoords());
-      }
-    });
-
-    // Simulate location sharing with contact
-    function shareSimulatedLocation(locText) {
-      const contact = localStorage.getItem('ws_contact') || 'No saved contact';
-      openModal(
-        'Location Shared',
-        `<p style="color: var(--muted-light);">Location (<strong>${locText}</strong>) has been shared with <strong>${contact}</strong> (simulated).</p>`
-      );
-      showToast('Location sharing simulated');
-    }
-
-    // Generate simulated coordinates (near Delhi)
-    function simulateCoords() {
-      const lat = (28.7041 + (Math.random() - 0.5) * 0.03).toFixed(5);
-      const lon = (77.1025 + (Math.random() - 0.5) * 0.03).toFixed(5);
-      return `${lat}, ${lon}`;
-    }
-
-    // Incident report form modal
-    document.getElementById('openReport').addEventListener('click', () => {
-      const template = document.getElementById('reportTemplate');
-      openModal('Report Incident', template.innerHTML);
-      setTimeout(() => {
-        const reportForm = document.getElementById('reportForm');
-        reportForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const type = document.getElementById('incidentType').value;
-          const loc = document.getElementById('locationInput').value.trim();
-          const desc = document.getElementById('descInput').value.trim();
-          if (!type) {
-            alert('Please select incident type.');
-            return;
-          }
-          if (!loc || !desc) {
-            alert('Please provide location and description.');
-            return;
-          }
-          closeModal();
-          openModal(
-            'Report Submitted',
-            `<p style="color: var(--muted-light);">Thank you! Your report has been submitted locally (demo only).<br><strong>Type:</strong> ${type}<br><strong>Location:</strong> ${loc}</p>`
-          );
-          showToast('Report saved (simulated)');
-        });
-      }, 50);
-    });
-
-    // Keyboard & focus handling for modals
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        if (modalBackdrop.classList.contains('active')) closeModal();
-        if (profileBackdrop.classList.contains('active')) closeProfile.click();
-      }
-    });
-    profileBackdrop.addEventListener('click', (e) => {
-      if (e.target === profileBackdrop) closeProfile.click();
-    });
-    modalBackdrop.addEventListener('keydown', (e) => {
-      if (e.key === 'Tab') {
-        // Trap focus inside modal
-        const focusables = modalBackdrop.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        );
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
-
-        if (e.shiftKey) {
-          if (document.activeElement === first) {
-            e.preventDefault();
-            last.focus();
-          }
-        } else {
-          if (document.activeElement === last) {
-            e.preventDefault();
-            first.focus();
-          }
-        }
-      }
-    });
-
-    // Theme toggle for light/dark mode
-    themeToggle.addEventListener('click', () => {
-      const isDark = root.getAttribute('data-theme') === 'dark';
-      root.setAttribute('data-theme', isDark ? '' : 'dark');
-      themeToggle.setAttribute('aria-pressed', String(!isDark));
-    });
-
-    // Animate markers on page load
-    window.addEventListener('load', () => {
-      const markers = mapMock.querySelectorAll('.marker');
-      markers.forEach((m, i) => {
-        m.style.opacity = '0';
-        m.style.transform += ' translateY(8px)';
-        setTimeout(() => {
-          m.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
-          m.style.opacity = '1';
-          m.style.transform = m.style.transform.replace(' translateY(8px)', '');
-        }, 150 * i);
-      });
-    });
-
-    // Initial render of places
-    renderPlaces();
-
-  </script>
 </body>
 </html>
