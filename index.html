@@ -1,226 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Women Safety Portal</title>
-<style>
-  /* Basic Reset */
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women Safety Portal</title>
+    <style>
+        /* Reset some styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
 
-  body { background: #f7f7f7; color: #333; }
+        body {
+            background: #fdf6f0;
+            color: #333;
+        }
 
-  header {
-    background: #ff4b5c;
-    color: white;
-    padding: 15px 20px;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-  }
+        header {
+            background: #ff6b81;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+        }
 
-  main { padding: 20px; max-width: 900px; margin: auto; }
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #ff9aa2;
+            padding: 10px 0;
+        }
 
-  .section { margin-bottom: 30px; }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+        }
 
-  h2 { margin-bottom: 10px; color: #ff4b5c; }
+        nav a:hover {
+            text-decoration: underline;
+            color: #fff0f5;
+        }
 
-  /* Help Center Search */
-  #helpSearch { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
-  #helpList { list-style: none; margin-top: 10px; }
-  #helpList li { background: white; padding: 10px; margin-bottom: 5px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
 
-  /* Location */
-  #locationStatus { margin-top: 10px; font-weight: bold; }
+        /* SOS Button */
+        .sos-btn {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
 
-  /* SOS Button */
-  .sos-btn {
-    background: #ff4b5c;
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    cursor: pointer;
-    display: block;
-    margin: 20px auto;
-    animation: pulse 1.5s infinite;
-  }
+        .sos-btn button {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            animation: pulse 1.5s infinite;
+        }
 
-  @keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,75,92, 0.7); }
-    70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(255,75,92, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,75,92, 0); }
-  }
+        .sos-btn button:hover {
+            background: #ff6b81;
+        }
 
-  /* Smooth UI transitions */
-  .fade { transition: all 0.3s ease-in-out; }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
 
-  /* Profile Form */
-  input, button { font-size: 1rem; }
-  .profile-form input { padding: 10px; margin-bottom: 10px; width: 100%; border-radius: 5px; border: 1px solid #ccc; }
-  .profile-form button { background: #ff4b5c; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
+        /* Sections */
+        section {
+            margin: 40px 0;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
 
-  /* Contacts List */
-  #contactsList li { background: white; padding: 10px; margin-bottom: 5px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-</style>
+        section:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: #ff6b81;
+            margin-bottom: 15px;
+        }
+
+        /* Tips Section */
+        .tips ul {
+            list-style: disc;
+            padding-left: 20px;
+        }
+
+        /* Search Help Centers */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .search-container input {
+            padding: 10px;
+            width: 300px;
+            border-radius: 8px 0 0 8px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        .search-container button {
+            padding: 10px 15px;
+            border: none;
+            background: #ff6b81;
+            color: white;
+            cursor: pointer;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .help-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .help-list li {
+            margin: 10px 0;
+            padding: 10px;
+            background: #ffe6e6;
+            border-radius: 5px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #ff6b81;
+            color: white;
+            margin-top: 40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .search-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .search-container input {
+                width: 80%;
+                margin-bottom: 10px;
+            }
+
+            .sos-btn button {
+                width: 80%;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<header>Women Safety Portal</header>
+    <header>Women Safety Portal</header>
+    <nav>
+        <a href="#sos">SOS</a>
+        <a href="#help">Help Centers</a>
+        <a href="#tips">Safety Tips</a>
+        <a href="#location">Simulated Location</a>
+    </nav>
 
-<main>
-  <!-- Profile Section -->
-  <div class="section">
-    <h2>Profile</h2>
-    <form class="profile-form" id="profileForm">
-      <input type="text" id="name" placeholder="Your Name" required>
-      <input type="tel" id="phone" placeholder="Your Phone Number" required>
-      <button type="submit">Save Profile</button>
-    </form>
-    <p id="profileStatus"></p>
-  </div>
+    <div class="container">
 
-  <!-- Help Centers Section -->
-  <div class="section">
-    <h2>Help Centers 🏥</h2>
-    <input type="text" id="helpSearch" placeholder="Search help centers...">
-    <ul id="helpList"></ul>
-  </div>
+        <!-- SOS Button -->
+        <section id="sos">
+            <h2>Emergency SOS</h2>
+            <div class="sos-btn">
+                <button onclick="triggerSOS()">🚨 SOS</button>
+            </div>
+        </section>
 
-  <!-- Location Section -->
-  <div class="section">
-    <h2>Share Location 📍</h2>
-    <button id="getLocationBtn">Get Current Location</button>
-    <p id="locationStatus">Location not shared yet.</p>
-  </div>
+        <!-- Search Help Centers -->
+        <section id="help">
+            <h2>Search Help Centers</h2>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Enter city or area">
+                <button onclick="searchCenters()">Search</button>
+            </div>
+            <ul class="help-list" id="helpList">
+                <!-- Help centers will appear here -->
+            </ul>
+        </section>
 
-  <!-- SOS Section -->
-  <div class="section">
-    <h2>Emergency SOS 🔴</h2>
-    <button class="sos-btn" id="sosBtn">SOS</button>
-    <p id="sosStatus"></p>
-  </div>
+        <!-- Safety Tips -->
+        <section id="tips" class="tips">
+            <h2>Women Safety Tips</h2>
+            <ul>
+                <li>Always share your location with a trusted friend or family member.</li>
+                <li>Avoid walking alone in poorly lit areas.</li>
+                <li>Trust your instincts and leave unsafe situations immediately.</li>
+                <li>Keep emergency contacts saved in your phone for quick access.</li>
+                <li>Use safety apps and wear personal safety devices when needed.</li>
+            </ul>
+        </section>
 
-  <!-- Contacts Section -->
-  <div class="section">
-    <h2>Emergency Contacts</h2>
-    <form id="contactForm">
-      <input type="text" id="contactName" placeholder="Contact Name" required>
-      <input type="tel" id="contactPhone" placeholder="Contact Phone" required>
-      <button type="submit">Add Contact</button>
-    </form>
-    <ul id="contactsList"></ul>
-  </div>
-</main>
+        <!-- Simulated Location -->
+        <section id="location">
+            <h2>Simulated Location Sharing</h2>
+            <button onclick="shareLocation()">Share My Location</button>
+            <p id="locationOutput"></p>
+        </section>
 
-<script>
-  // ======= Profile Storage =======
-  const profileForm = document.getElementById('profileForm');
-  const profileStatus = document.getElementById('profileStatus');
+    </div>
 
-  profileForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('name').value;
-    const phone = document.getElementById('phone').value;
-    localStorage.setItem('userProfile', JSON.stringify({ name, phone }));
-    profileStatus.textContent = 'Profile saved successfully!';
-  });
+    <footer>
+        &copy; 2025 Women Safety Portal. All Rights Reserved.
+    </footer>
 
-  // Load profile on start
-  window.addEventListener('load', () => {
-    const savedProfile = JSON.parse(localStorage.getItem('userProfile'));
-    if(savedProfile){
-      document.getElementById('name').value = savedProfile.name;
-      document.getElementById('phone').value = savedProfile.phone;
-      profileStatus.textContent = 'Profile loaded from local storage.';
-    }
-  });
+    <script>
+        // SOS Button Alert
+        function triggerSOS() {
+            alert("🚨 SOS Activated! Your emergency contacts will be notified.");
+        }
 
-  // ======= Help Centers =======
-  const helpCenters = [
-    "City Hospital, Main Street",
-    "Police Station, Downtown",
-    "Women Help Line, 1091",
-    "Community Center, West Area",
-    "Health Clinic, North District"
-  ];
+        // Sample Help Centers
+        const centers = [
+            {name: "City Police Station", city: "Delhi"},
+            {name: "Women Help Center", city: "Mumbai"},
+            {name: "24/7 Helpline Center", city: "Bangalore"},
+            {name: "Neighborhood Safety Center", city: "Delhi"},
+            {name: "Women Safety NGO", city: "Chennai"}
+        ];
 
-  const helpList = document.getElementById('helpList');
-  const helpSearch = document.getElementById('helpSearch');
+        function searchCenters() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const list = document.getElementById('helpList');
+            list.innerHTML = '';
+            const filtered = centers.filter(c => c.city.toLowerCase().includes(input));
+            if(filtered.length === 0){
+                list.innerHTML = '<li>No help centers found in this area.</li>';
+            } else {
+                filtered.forEach(c => {
+                    const li = document.createElement('li');
+                    li.textContent = `${c.name} - ${c.city}`;
+                    list.appendChild(li);
+                });
+            }
+        }
 
-  function displayHelpCenters(filter=""){
-    helpList.innerHTML = "";
-    helpCenters.filter(c => c.toLowerCase().includes(filter.toLowerCase()))
-      .forEach(c => {
-        const li = document.createElement('li');
-        li.textContent = c;
-        helpList.appendChild(li);
-      });
-  }
-
-  helpSearch.addEventListener('input', () => displayHelpCenters(helpSearch.value));
-  displayHelpCenters();
-
-  // ======= Location Sharing =======
-  const getLocationBtn = document.getElementById('getLocationBtn');
-  const locationStatus = document.getElementById('locationStatus');
-
-  getLocationBtn.addEventListener('click', () => {
-    if(navigator.geolocation){
-      navigator.geolocation.getCurrentPosition(
-        pos => locationStatus.textContent = `Latitude: ${pos.coords.latitude}, Longitude: ${pos.coords.longitude}`,
-        err => locationStatus.textContent = "Unable to retrieve location."
-      );
-    } else {
-      locationStatus.textContent = "Geolocation not supported.";
-    }
-  });
-
-  // ======= SOS Button =======
-  const sosBtn = document.getElementById('sosBtn');
-  const sosStatus = document.getElementById('sosStatus');
-
-  sosBtn.addEventListener('click', () => {
-    sosStatus.textContent = "SOS Activated! Notifying your emergency contacts...";
-    // Simulate alert for contacts
-    const contacts = JSON.parse(localStorage.getItem('emergencyContacts')) || [];
-    if(contacts.length){
-      contacts.forEach(c => console.log(`SOS sent to ${c.name} - ${c.phone}`));
-      sosStatus.textContent += ` ${contacts.length} contacts notified.`;
-    } else {
-      sosStatus.textContent += " No contacts saved.";
-    }
-  });
-
-  // ======= Emergency Contacts =======
-  const contactForm = document.getElementById('contactForm');
-  const contactsList = document.getElementById('contactsList');
-
-  function displayContacts(){
-    contactsList.innerHTML = "";
-    const contacts = JSON.parse(localStorage.getItem('emergencyContacts')) || [];
-    contacts.forEach(c => {
-      const li = document.createElement('li');
-      li.textContent = `${c.name} - ${c.phone}`;
-      contactsList.appendChild(li);
-    });
-  }
-
-  contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('contactName').value;
-    const phone = document.getElementById('contactPhone').value;
-    const contacts = JSON.parse(localStorage.getItem('emergencyContacts')) || [];
-    contacts.push({name, phone});
-    localStorage.setItem('emergencyContacts', JSON.stringify(contacts));
-    contactForm.reset();
-    displayContacts();
-  });
-
-  displayContacts();
-</script>
-
+        // Simulated Location Sharing
+        function shareLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const output = document.getElementById('locationOutput');
+                    output.textContent = `Latitude: ${position.coords.latitude.toFixed(5)}, Longitude: ${position.coords.longitude.toFixed(5)}`;
+                }, () => {
+                    alert("Unable to retrieve location. Please allow location access.");
+                });
+            } else {
+                alert("Geolocation is not supported by your browser.");
+            }
+        }
+    </script>
 </body>
 </html>
